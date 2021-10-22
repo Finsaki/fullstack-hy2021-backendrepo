@@ -1,5 +1,7 @@
 const express = require('express')
 const morgan = require('morgan')
+const app = express()
+const cors = require('cors')
 
 /**
  * Aki K. 21.10.2021
@@ -12,10 +14,8 @@ morgan.token('response-body', function (req, res) {
   }
   return null
 })
-
-const app = express()
-
 app.use(express.json())
+app.use(cors())
 //setting up morgan with custom console message after CRUD operations are used
 //I deleted '-' before response-time, because it signifies null and is very confusing to see in the middle of the message
 app.use(morgan(':method :url :status :res[content-length] :response-time ms :response-body'))
@@ -108,7 +108,7 @@ const generateId = () => {
   return newId
 }
 
-const PORT = 3001
+const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
 })
