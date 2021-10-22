@@ -16,6 +16,7 @@ morgan.token('response-body', function (req, res) {
 })
 app.use(express.json())
 app.use(cors())
+app.use(express.static('build'))
 //setting up morgan with custom console message after CRUD operations are used
 //I deleted '-' before response-time, because it signifies null and is very confusing to see in the middle of the message
 app.use(morgan(':method :url :status :res[content-length] :response-time ms :response-body'))
