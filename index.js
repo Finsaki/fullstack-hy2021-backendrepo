@@ -10,6 +10,7 @@ const Person = require('./models/person')
  */
 
 //setting up a custom morgan token that shows the req body data when the operation is a POST operation
+// eslint-disable-next-line no-unused-vars
 morgan.token('response-body', function (req, res) {
   if (req.method === 'POST') {
     return JSON.stringify(req.body)
@@ -43,20 +44,21 @@ app.get('/info', (req, res) => {
 })
 
 app.get('/api/persons/:id', (req, res, next) => {
-  Person.findById(req.params.id).then(person => {
-    console.log(person)
-    if (person) {
-      res.json(person)
-    } else {
-      res.status(404).end()
-    }
-  })
-  .catch(error => next(error))
+  Person.findById(req.params.id)
+    .then(person => {
+      console.log(person)
+      if (person) {
+        res.json(person)
+      } else {
+        res.status(404).end()
+      }
+    })
+    .catch(error => next(error))
 })
 
 app.delete('/api/persons/:id', (req, res, next) => {
   Person.findByIdAndRemove(req.params.id)
-    .then(result => {
+    .then(() => {
       res.status(204).end()
     })
     .catch(error => next(error))
